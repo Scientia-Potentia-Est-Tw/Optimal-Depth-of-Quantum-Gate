@@ -1,10 +1,10 @@
 ## Table of Contents
-- [About this Project](#About this Project)
+- [About](#About)
 - [Installation](#Installation)
 - [Usage](#Usage)
 - [Result](#Result)
 
-## About this Project
+## About
 In this repo, we implement an approach which reduce the depth of quantum circuit specific is CNOT gate
 
 ## Installation
