@@ -13,7 +13,7 @@ To execute this repo, please create a virtual environments
 python3 -m venv venv
 source venv/bin/activate
 ```
-Then install some modules
+Then install some modules which used in algorithm
 ```
 pip install numpy
 pip install random
