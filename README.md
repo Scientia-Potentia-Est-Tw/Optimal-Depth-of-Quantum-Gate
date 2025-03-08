@@ -1,2 +1,2 @@
 # Optimal-Depth-of-Quantum-Gate
-In this project, we introduce a approach which reduce the depth of quantum circuit specific is CNOT gate
+In this repo, we implement an approach which reduce the depth of quantum circuit specific is CNOT gate
