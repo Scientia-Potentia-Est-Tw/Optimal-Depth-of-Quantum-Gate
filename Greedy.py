@@ -6,7 +6,6 @@ import cost_function
 import sys
 import random
 import copy
-from scipy import linalg
 
 '''
 This function will execute the two kind of greedy algorithm depends on selection parameter
