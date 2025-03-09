@@ -8,7 +8,7 @@
 In this repo, we implement an approach that reduces the depth of quantum circuits, specifically focusing on the CNOT gate.
 
 ## Installation
-To execute this repo, please create a virtual environment.
+To execute this repo, please create a virtual environment
 ```
 python3 -m venv venv
 source venv/bin/activate
