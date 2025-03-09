@@ -5,24 +5,24 @@
 - [Result](#Result)
 
 ## About
-In this repo, we implement an approach which reduce the depth of quantum circuit specific is CNOT gate
+In this repo, we implement an approach that reduces the depth of quantum circuits, specifically focusing on the CNOT gate.
 
 ## Installation
-To execute this repo, please create a virtual environments
+To execute this repo, please create a virtual environment.
 ```
 python3 -m venv venv
 source venv/bin/activate
 ```
-Then install some modules which used in algorithm
+Then install the modules used in the algorithm
 ```
 pip install numpy
 pip install random
 pip install copy
 ```
 ## Usage
-The command execute this Greedy algorithm
+The command executes this Greedy algorithm
 ```
 python3 ImprovedGreedy.py
 ```
 ## Result
-The algorithm would generate the CNOT synthesized result that record in files
+The algorithm generates the CNOT synthesis result record in files
