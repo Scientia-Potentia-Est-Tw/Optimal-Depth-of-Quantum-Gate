@@ -1,6 +1,6 @@
 import config
 def Recording(sequence, layers, select):
-	#Open a file that Layers and sequences with SIZE for cost function to store the operations
+	#Open a file that Layers and sequences with SIZE for square cost function to store the operations
 	if select == 0:
 		layer_file = config.sq_Layer_File
 		seq_file = config.sq_Seq_File
@@ -25,6 +25,11 @@ def Recording(sequence, layers, select):
 	f.close()
 	
 	#recording each experimental result for repeatedly
-	record_file = open(config.col_Record_File, "a")
-	record_file.write("CNOT: %d, depth: %d\n" % (len(sequence), len(layers)))
-	record_file.close()
+	if select == 0:
+		record_file = open(config.row_Record_File, "a")
+		record_file.write("CNOT: %d, depth: %d\n" % (len(sequence), len(layers)))
+		record_file.close()
+	elif select == 1:
+		record_file = open(config.col_Record_File, "a")
+		record_file.write("CNOT: %d, depth: %d\n" % (len(sequence), len(layers)))
+		record_file.close()
