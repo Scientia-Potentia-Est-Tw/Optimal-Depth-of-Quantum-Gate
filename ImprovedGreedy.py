@@ -10,9 +10,10 @@ def main():
 	matrix = np.loadtxt('AES.txt', usecols=range(32), dtype=int)
 	print("The Load Block Cipher Data: ")
 	print(matrix)
+	#for i in range(1000):
 	Greedy(matrix, 0)
-	Greedy(matrix, 1)
-	Verify(matrix, 0)
-	Verify(matrix, 1)
+	#Greedy(matrix, 1)
+	#Verify(matrix, 0)
+	#Verify(matrix, 1)
 if __name__ == "__main__":
 	main()

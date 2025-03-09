@@ -6,6 +6,7 @@ import cost_function
 import sys
 import random
 import copy
+import writers
 
 '''
 This function will execute the two kind of greedy algorithm depends on selection parameter
@@ -61,32 +62,35 @@ def Greedy(mat, select):
 			minm_cost = cost_function.cost_prod(mat)+cost_function.cost_prod(inverse)
 
 		#check the can_one
-		if not one:
-			#go through the matrix and execute the column operation under not can_one
-			for i in range(config.SIZE):
-				if row_visi[i] == 1: #find any control exist
+		
+		#if not one:
+		'''
+		#go through the matrix and execute the column operation under not can_one
+		for i in range(config.SIZE):
+			if row_visi[i] == 1: #find any control exist
+				continue
+			for j in range(config.SIZE): #find any target exist
+				if row_visi[j] == 1 or j == i:#check the target exist or in the diagonal index
 					continue
-				for j in range(config.SIZE): #find any target exist
-					if row_visi[j] == 1 or j == i:#check the target exist or in the diagonal index
-						continue
-					tmp_mat = operations.row_i2j(mat, i, j) #execute the column operation from col_visi
-					tmp_inverse = operations.col_i2j(inverse, j, i) #calculate the row operation on inverse
-					if select == 0:
-						tmp_cost = cost_function.cost_sq(tmp_mat)+cost_function.cost_sq(np.transpose(tmp_inverse)) #re-calculate the cost function for H_{sqc}
-					elif select == 1:
-						tmp_cost = cost_function.cost_prod(tmp_mat) + cost_function.cost_prod(tmp_inverse)
+				tmp_mat = operations.row_i2j(mat, i, j) #execute the column operation from col_visi
+				tmp_inverse = operations.col_i2j(inverse, j, i) #calculate the row operation on inverse
+				if select == 0:
+					tmp_cost = cost_function.cost_sq(tmp_mat)+cost_function.cost_sq(np.transpose(tmp_inverse)) #re-calculate the cost function for H_{sqc}
+				elif select == 1:
+					tmp_cost = cost_function.cost_prod(tmp_mat) + cost_function.cost_prod(tmp_inverse)
 
-					#The new one cost should reduced over the epsilon range
-					if tmp_cost < minm_cost+config.epsilon:
-						if tmp_cost < minm_cost-config.epsilon:
-							select_list.clear() #clear the select_list and push the available operator
-							operator = (i, j, 0) #in this choose is column operator so that record the 1
-							select_list.append(operator) #append this operator to select_list as available operator
-							minm_cost = tmp_cost #redueced success so that update the minm_cost
-						else:
-							operator = (i, j, 0) #otherwise just push the operator 1
-							select_list.append(operator) #then append to the select_list
-
+				#The new one cost should reduced over the epsilon range
+				if tmp_cost < minm_cost+config.epsilon:
+					if tmp_cost < minm_cost-config.epsilon:
+						select_list.clear() #clear the select_list and push the available operator
+						operator = (i, j, 0) #in this choose is column operator so that record the 1
+						select_list.append(operator) #append this operator to select_list as available operator
+						minm_cost = tmp_cost #redueced success so that update the minm_cost
+					else:
+						operator = (i, j, 0) #otherwise just push the operator 1
+						select_list.append(operator) #then append to the select_list
+		
+		'''
 		for i in range(config.SIZE):
 			if col_visi[i] == 1: #check the has any row operator exist in recently
 				continue
@@ -131,6 +135,7 @@ def Greedy(mat, select):
 			rand = random.randint(0, len(select_list)-1) #setting a random seed
 			select_operator = select_list[rand] #for find the randomly operations on the select list
 			print("The random pick", rand, "is: ", select_operator)
+			'''
 			if select_operator[2] == 0: #pick operation is row 
 				mat = operations.row_i2j(mat, select_operator[0], select_operator[1]) #then execute the row operation
 				inverse = operations.col_i2j(inverse, select_operator[1], select_operator[0]) #then inverse calculate select column
@@ -141,14 +146,15 @@ def Greedy(mat, select):
 				row_visi[select_operator[0]] = 1 #the control setting 1
 				row_visi[select_operator[1]] = 1 #the target setting 1
 			else:
-				mat = operations.col_i2j(mat, select_operator[0], select_operator[1]) #otherwise pick the column operation for matrix
-				inverse = operations.row_i2j(inverse, select_operator[1], select_operator[0]) #and inverse execute the row operation
-				layer_c.append((select_operator[0], select_operator[1], 1)) #append the operation as 1 to L_{c}
-				col_op.append((select_operator[0], select_operator[1], 1)) #record the column operation on col op list
-				if all(x ==0 for x in col_visi): #if doesn't exist any column operation on col visi list
-					depth += 1 #then depth add
-				col_visi[select_operator[0]] = 1 #on the col visi list record the control to 1
-				col_visi[select_operator[1]] = 1 #also record 1 for target
+			'''
+			mat = operations.col_i2j(mat, select_operator[0], select_operator[1]) #otherwise pick the column operation for matrix
+			inverse = operations.row_i2j(inverse, select_operator[1], select_operator[0]) #and inverse execute the row operation
+			layer_c.append((select_operator[0], select_operator[1], 1)) #append the operation as 1 to L_{c}
+			col_op.append((select_operator[0], select_operator[1], 1)) #record the column operation on col op list
+			if all(x ==0 for x in col_visi): #if doesn't exist any column operation on col visi list
+				depth += 1 #then depth add
+			col_visi[select_operator[0]] = 1 #on the col visi list record the control to 1
+			col_visi[select_operator[1]] = 1 #also record 1 for target
 
 		if depth > config._maximum_depth: #one of limit in paper is depth over 100 is bad performance and is not a valued reference
 			print("Depth too large") #then just show this matrix after reduced became too large
@@ -232,30 +238,6 @@ def Greedy(mat, select):
 			layers.append(nl_r)
 
 	print("All layers processed:", layers)
-
-	#open a file called Square Layers SIZE cost function test to store the operations
-	if select == 0:
-		layer_file = config.sq_Layer_File
-		seq_file = config.sq_Seq_File
-	elif select == 1:
-		layer_file = config.prod_Layer_File
-		seq_file = config.prod_Seq_File
-
-	with open(layer_file, "w") as f:
-		for l in layers:
-			#print("The l in layers: ", l)
-			for lay in l:
-				#print("The lay in l: ", lay)
-				#print("The lay[0] is: ", lay[0])
-				#print("The lay[1] is: ", lay[1])
-				f.write("%d %d " % (lay[0], lay[1]))
-			f.write("\n")
-		f.write("CNOT: %d, depth: %d\n" % (len(sequence), len(layers)))
-
-	f.close()
-
-	with open(seq_file, "w") as f:
-		for i in sequence:
-			f.write("%d %d %d\n" % (i[0], i[1], i[2]))
-		f.write("CNOT: %d\n" % (len(sequence)))
-	f.close()
+	
+	#write the results
+	writers.Recording(sequence, layers, select)	

@@ -6,6 +6,20 @@
 
 ## About
 In this repo, we implement an approach that reduces the depth of quantum circuits, specifically focusing on the CNOT gate.
+```bash
+.
+├── AES.txt
+├── Can_depth_one.py
+├── Greedy.py
+├── ImprovedGreedy.py
+├── LICENSE
+├── README.md
+├── config.py
+├── cost_function.py
+├── operations.py
+├── verify.py
+└── writers.py
+```
 
 ## Installation
 To execute this repo, please create a virtual environment
