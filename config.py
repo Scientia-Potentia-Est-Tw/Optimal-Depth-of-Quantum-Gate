@@ -10,7 +10,4 @@ sq_Layer_File = "Square_Layers_" + str(SIZE) + "_cost_function_result"
 sq_Seq_File = "Square_seq_" + str(SIZE) + "_cost_function_result"
 prod_Layer_File = "Product_Layers_" + str(SIZE) + "_cost_fucntion_result"
 prod_Seq_File = "Product_seq_" + str(SIZE) + "_cost_function_result"
-#Record File
-col_Record_File = "Record_Column_Strategy"
-row_Record_File = "Record_Row_Strategy"
 
